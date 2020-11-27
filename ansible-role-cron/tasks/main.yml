@@ -1,0 +1,15 @@
+- name: creating cron.sh
+  template:
+    src: "cron.sh"
+    dest: "/root/cron.sh"
+
+- name: Crontab create
+  cron:
+    name: Add date and time to a file.
+    minute: "5"
+    hour: "0"
+    weekday: "4"
+    user: "root"
+    job: ". /root/cron.sh >> r1soft_logs"
+    cron_file: r1soft_logs
+    state: present

@@ -1,0 +1,30 @@
+- name: Install R1_soft_agent
+  yum:
+    name:
+     - serverbackup-enterprise-agent
+ 
+- name: Install R1_soft start
+  command: /etc/init.d/cdp-agent start
+  when: ansible_os_family == 'RedHat'
+
+- name: stop iptables
+  shell: service iptables stop
+  when: ansible_os_family == 'RedHat'
+   
+
+
+# - name: Install 
+#   command: iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+#   when: ansible_os_family == 'RedHat'
+
+# - name: Install R1_soft_agent
+#   command: iptables -A INPUT -p tcp --dport 1167 -j ACCEPT  &&  service iptables save
+#   when: ansible_os_family == 'RedHat' 
+
+- name: Get key from server
+  command: "r1soft-setup --get-key   http://'{{ server_ip }}':80"
+  when: ansible_os_family == 'RedHat' 
+
+
+
+

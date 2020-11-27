@@ -1,0 +1,17 @@
+- name: creating r1soft repo
+  template:
+    src: "r1soft.repo"
+    dest: "/etc/yum.repos.d/r1soft.repo"
+
+- name: Install Prerequisites
+  yum:
+    name:
+     - kernel-devel-2.6.32-754.27.1.el6.x86_64  
+     - vim 
+     - serverbackup-enterprise 
+     - epel-release
+    update_cache: yes
+
+- name: Set hostname
+  hostname:
+    name: "{{ inventory_hostname }}"
